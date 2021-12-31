@@ -61,11 +61,6 @@ export const MapContainer = (props) => {
         initialCenter={center}
         center={center}
       >
-        <Marker
-          name={"Dolores park"}
-          position={{ lat: 50.0, lng: 36.26 }}
-          icon={cube}
-        />
         {arrDataAp.map((arr) => (
           <Marker
             key={arr._id}

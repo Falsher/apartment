@@ -13,7 +13,7 @@ function App() {
       <FormAppartmentAdd />
       <div className="container-fluid p-0">
         <div className="col-2">
-          <h5>сапрспрсfп</h5>
+          <h5>Здесь должно буть окно со списком из БД</h5>
         </div>
         <div className="col-10">
           <GoogleMap />

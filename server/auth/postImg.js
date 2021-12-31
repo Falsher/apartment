@@ -1,16 +1,12 @@
 const apartmentModel = require("../model/apartment");
-
+const path = require("path");
+const fs = require("fs/promises");
 require("dotenv").config();
 
-const signup = async (req, res) => {
+const postImg = async (req, res) => {
   try {
-    const { adress, geoAdress, description } = req.body;
+    const { originalname } = req.file;
 
-    await apartmentModel.create({
-      adress,
-      geoAdress,
-      description,
-    });
     res.status(201).json({
       status: "success",
       code: 201,
@@ -21,4 +17,4 @@ const signup = async (req, res) => {
   }
 };
 
-module.exports = signup;
+module.exports = postImg;

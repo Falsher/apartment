@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import * as DataApi from "./DataApi";
 import Geocode from "react-geocode";
 import MyInput from "./MyInput";
@@ -6,12 +7,11 @@ const FormAppartmentAdd = () => {
   Geocode.setApiKey(process.env.REACT_APP_GEOCODING_API_KEY);
 
   const [description, setDescription] = useState("");
-
   const [adress, setAdress] = useState("");
-
   const [activeBtn, setActiveBtn] = useState(false);
-
   const [geoAdress, setGeoAdress] = useState();
+  const [page, setPage] = useState(null);
+
   const HandleProps = () => {
     if (activeBtn) {
       return setActiveBtn(false);
@@ -19,11 +19,18 @@ const FormAppartmentAdd = () => {
     return setActiveBtn(true);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
     DataApi.sendDataApi(adress, geoAdress, description);
+
+    const data = new FormData();
+    data.append("page", page);
+    await axios.post("http://localhost:8090/auth/postImg", data, {
+      headers: { "content-type": "multipart/form-data" },
+    });
     setAdress("");
     setDescription("");
   };
+
   useEffect(() => {
     Geocode.fromAddress(adress).then(
       (response) => {
@@ -37,14 +44,14 @@ const FormAppartmentAdd = () => {
 
   return (
     <div className={activeBtn ? "modal-regist activeBtn" : "modal-regist"}>
-      <button className="btnMenu" onClick={HandleProps}>
+      <button className=" btnMenu" onClick={HandleProps}>
         ➕
       </button>
-      <form className="border-white">
+      <form className="border-white" onSubmit={handleSubmit}>
         <MyInput
           value={adress}
           onChange={(e) => setAdress(e.target.value)}
-          placeholder="Страна"
+          placeholder="Город Улица №дома"
           type="text"
         />
         <MyInput
@@ -53,9 +60,14 @@ const FormAppartmentAdd = () => {
           placeholder="описание"
           type="text"
         />
-        <MyInput placeholder="фото жилья" type="file" />
+        <MyInput
+          placeholder="фото жилья"
+          onChange={(e) => setPage(e.target.files[0])}
+          type="file"
+          multiple
+        />
         <button className="btn btn-primary mt-2 " onClick={handleSubmit}>
-          Добавить
+          Добавить описание
         </button>
       </form>
     </div>
