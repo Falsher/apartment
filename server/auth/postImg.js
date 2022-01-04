@@ -5,8 +5,9 @@ require("dotenv").config();
 
 const postImg = async (req, res) => {
   try {
-    // const { originalname } = req.file;
+    const { originalname } = req.file;
 
+    // console.log(originalname);
     res.status(201).json({
       status: "success",
       code: 201,

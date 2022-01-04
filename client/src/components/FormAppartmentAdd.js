@@ -6,7 +6,7 @@ import MyInput from "./MyInput";
 
 const FormAppartmentAdd = ({ force }) => {
   Geocode.setApiKey(process.env.REACT_APP_GEOCODING_API_KEY);
-
+  const [visible, setVisible] = useState(false);
   const [activeBtn, setActiveBtn] = useState(false);
   const [description, setDescription] = useState("");
   const [adress, setAdress] = useState("");
@@ -24,16 +24,14 @@ const FormAppartmentAdd = ({ force }) => {
     e.preventDefault();
     setAdress("");
     setDescription("");
-
-    DataApi.sendDataApi(adress, geoAdress, description);
+    let imgName = page.name;
+    DataApi.sendDataApi(adress, geoAdress, description, imgName);
     const data = new FormData();
     data.append("page", page);
     await axios.post(
-      "https://immense-reef-45036.herokuapp.com/auth/postImg",
-      data,
-      {
-        headers: { "content-type": "multipart/form-data" },
-      }
+      "http://localhost:8090/auth/postImg",
+      data
+      //  {  headers: { "content-type": "multipart/form-data" },  }
     );
     force();
   };
@@ -50,10 +48,18 @@ const FormAppartmentAdd = ({ force }) => {
       );
     }
   }, [adress]);
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setVisible(true);
+    }
+  }, []);
   return (
     <div className={activeBtn ? "modal-regist activeBtn" : "modal-regist"}>
-      <button className="btnMenu" onClick={handleActive}>
+      <button
+        className={visible ? "visible btnMenu" : "not-visible btnMenu"}
+        onClick={handleActive}
+      >
         ➕
       </button>
       <form className="border-white" onSubmit={handleSubmit}>

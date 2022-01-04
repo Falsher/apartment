@@ -4,12 +4,13 @@ require("dotenv").config();
 
 const signup = async (req, res) => {
   try {
-    const { adress, geoAdress, description } = req.body;
+    const { adress, geoAdress, description, imgName } = req.body;
 
     await apartmentModel.create({
       adress,
       geoAdress,
       description,
+      imgName,
     });
     res.status(201).json({
       status: "success",
