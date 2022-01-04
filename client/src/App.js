@@ -1,7 +1,7 @@
 import React from "react";
 import GoogleMap from "./components/GoogleMap";
 import Navbar from "./components/Navbar";
-import FormAppartmentAdd from "./components/FormAppartmentAdd";
+// import FormAppartmentAdd from "./components/FormAppartmentAdd";
 
 import "./App.css";
 
@@ -10,7 +10,7 @@ function App() {
     <div className="container-fluid p-0">
       <Navbar />
 
-      <FormAppartmentAdd />
+      {/* <FormAppartmentAdd /> */}
       <div className="container-fluid p-0">
         <div className="col-2">
           <h5>Здесь должно буть окно со списком из БД</h5>
