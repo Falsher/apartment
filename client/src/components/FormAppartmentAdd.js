@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import * as DataApi from "./DataApi";
 import Geocode from "react-geocode";
 import MyInput from "./MyInput";
@@ -12,7 +11,6 @@ const FormAppartmentAdd = ({ force }) => {
   const [adress, setAdress] = useState("");
   const [geoAdress, setGeoAdress] = useState();
   const [page, setPage] = useState(null);
-  const [baseImg, setBaseImg] = useState("");
 
   const handleActive = () => {
     if (activeBtn) {
@@ -38,17 +36,9 @@ const FormAppartmentAdd = ({ force }) => {
     e.preventDefault();
     setAdress("");
     setDescription("");
-    // const data = new FormData();
-    // data.append("page", page);
     const basePage = await convertBase(page);
-    setBaseImg(basePage);
-    DataApi.sendDataApi(adress, geoAdress, description);
 
-    //   await axios.post(
-    //     "http://localhost:8090/auth/postImg",
-    //     data
-    //     //  {  headers: { "content-type": "multipart/form-data" },  }
-    //   );
+    DataApi.sendDataApi(adress, geoAdress, description, basePage);
     force();
   };
 
@@ -86,7 +76,7 @@ const FormAppartmentAdd = ({ force }) => {
           placeholder="Город Улица №дома"
           type="text"
         />
-        <img width="100" alt="" src={baseImg} />
+        {/* <img width="100" alt="" src={baseImg} /> */}
         <MyInput
           value={description}
           onChange={(e) => setDescription(e.target.value)}

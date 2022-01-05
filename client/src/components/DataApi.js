@@ -1,10 +1,11 @@
 import axios from "axios";
 
-export const sendDataApi = async (adress, geoAdress, description) => {
+export const sendDataApi = async (adress, geoAdress, description, basePage) => {
   return await axios.post("http://localhost:8090/auth/signup", {
     adress,
     geoAdress,
     description,
+    basePage,
   });
 };
 export const retrievalDataApi = async () => {
