@@ -6,6 +6,8 @@ require("dotenv").config;
 const routerApartment = require("./router/routerApartment");
 const app = express();
 const http = require("http").createServer(app);
+const multer = require("multer");
+const uploads = multer({ dest: "uploads/" });
 
 const { DB_HOST, PORT = 8090 } = process.env;
 
@@ -16,6 +18,8 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.static("static"));
+
+app.use(uploads.any());
 app.get("/", (req, res) => {
   res.end(`
   <div>

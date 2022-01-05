@@ -12,6 +12,7 @@ const FormAppartmentAdd = ({ force }) => {
   const [adress, setAdress] = useState("");
   const [geoAdress, setGeoAdress] = useState();
   const [page, setPage] = useState(null);
+  const [baseImg, setBaseImg] = useState("");
 
   const handleActive = () => {
     if (activeBtn) {
@@ -20,19 +21,34 @@ const FormAppartmentAdd = ({ force }) => {
     return setActiveBtn(true);
   };
 
+  const convertBase = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setAdress("");
     setDescription("");
-    let imgName = page.name;
-    DataApi.sendDataApi(adress, geoAdress, description, imgName);
-    const data = new FormData();
-    data.append("page", page);
-    await axios.post(
-      "http://localhost:8090/auth/postImg",
-      data
-      //  {  headers: { "content-type": "multipart/form-data" },  }
-    );
+    // const data = new FormData();
+    // data.append("page", page);
+    const basePage = await convertBase(page);
+    setBaseImg(basePage);
+    DataApi.sendDataApi(adress, geoAdress, description);
+
+    //   await axios.post(
+    //     "http://localhost:8090/auth/postImg",
+    //     data
+    //     //  {  headers: { "content-type": "multipart/form-data" },  }
+    //   );
     force();
   };
 
@@ -62,6 +78,7 @@ const FormAppartmentAdd = ({ force }) => {
       >
         ➕
       </button>
+
       <form className="border-white" onSubmit={handleSubmit}>
         <MyInput
           value={adress}
@@ -69,6 +86,7 @@ const FormAppartmentAdd = ({ force }) => {
           placeholder="Город Улица №дома"
           type="text"
         />
+        <img width="100" alt="" src={baseImg} />
         <MyInput
           value={description}
           onChange={(e) => setDescription(e.target.value)}

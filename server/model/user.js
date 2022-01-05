@@ -1,8 +1,23 @@
 const { Schema, model } = require("mongoose");
+const Joi = require("joi");
 
-const userModel = new Schema({
-  name: { type: "string", unique: true, required: true },
-  password: { type: "string", required: true },
+const userSchema = new Schema(
+  {
+    adress: { type: String, required: true },
+    geoAdress: { type: {}, required: true },
+    description: { type: String, required: true },
+    imgName: { type: String },
+  },
+  { versionKey: false, timestamps: true }
+);
+const joiUserSchema = Joi.object({
+  adress: Joi.string().required(),
+  geoAdress: Joi.object().required(),
+  description: Joi.string(),
+  imgName: Joi.string(),
 });
-
-module.exports = model("userModel", userModel);
+const User = model("user", userSchema);
+module.exports = {
+  User,
+  joiUserSchema,
+};
