@@ -37,8 +37,9 @@ const FormAppartmentAdd = ({ force }) => {
     setAdress("");
     setDescription("");
     const basePage = await convertBase(page);
-    console.log(basePage);
-    DataApi.sendDataApi(adress, geoAdress, description, basePage);
+    const nameImg = page.name;
+    // console.log(page);
+    DataApi.sendDataApi(adress, geoAdress, description, basePage, nameImg);
     force();
   };
 

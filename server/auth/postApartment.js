@@ -3,11 +3,10 @@ require("dotenv").config();
 const fs = require("fs");
 const signup = async (req, res) => {
   try {
-    const { adress, geoAdress, description, basePage } = req.body;
+    const { adress, geoAdress, description, basePage, nameImg } = req.body;
     let base64Image = basePage.split("data:image/jpeg;base64,").pop();
-
     fs.writeFile(
-      "./temp/image.jpg",
+      `./temp/${nameImg}`,
       base64Image,
       { encoding: "base64" },
       function (err) {
@@ -18,6 +17,7 @@ const signup = async (req, res) => {
       adress,
       geoAdress,
       description,
+      nameImg,
     });
 
     res.status(201).json({
