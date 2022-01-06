@@ -1,4 +1,5 @@
 import axios from "axios";
+import { HTTP_REQ } from "./constant";
 
 export const sendDataApi = async (
   adress,
@@ -7,7 +8,7 @@ export const sendDataApi = async (
   basePage,
   nameImg
 ) => {
-  return await axios.post("http://localhost:8090/auth/signup", {
+  return await axios.post(`${HTTP_REQ}auth/signup`, {
     adress,
     geoAdress,
     description,
@@ -16,5 +17,5 @@ export const sendDataApi = async (
   });
 };
 export const retrievalDataApi = async () => {
-  return axios.get("http://localhost:8090/auth/getApartment");
+  return axios.get(`${HTTP_REQ}auth/getApartment`);
 };

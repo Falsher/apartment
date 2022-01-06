@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import * as DataApi from "./DataApi";
 import FormAppartmentAdd from "./FormAppartmentAdd";
+import { HTTP_REQ } from "./constant";
 import cube from "./page/cube.png";
 
 export const MapContainer = (props) => {
@@ -37,7 +38,7 @@ export const MapContainer = (props) => {
           <img
             width="100%"
             alt=""
-            src={`http://localhost:8090/${arrayOneAppart.nameImg}`}
+            src={`${HTTP_REQ}${arrayOneAppart.nameImg}`}
           />
         ) : (
           <></>
