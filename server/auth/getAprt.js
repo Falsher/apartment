@@ -1,16 +1,14 @@
 const { User } = require("../model/user");
 require("dotenv").config();
-// const path = require("path");
-// const fs = require("fs");
+const path = require("path");
+const fs = require("fs");
 const getApartment = async (req, res) => {
   try {
     const apartment = await User.find({});
-
-    // const onlyPath = path.join(__dirname, "../", "images");
-
-    // fs.readdir(onlyPath, (err, data) => {
-    //   data;
-    // });
+    // console.log(apartment.map((apart) => apart.nameImg));
+    // const image = path.join(__dirname, "./temp");
+    // console.log(image);
+    // var readStream = fs.createReadStream("./temp");
 
     return res.json(apartment);
   } catch (error) {

@@ -1,10 +1,8 @@
 import React from "react";
 import GoogleMap from "./components/GoogleMap";
 import Navbar from "./components/Navbar";
-// import FormAppartmentAdd from "./components/FormAppartmentAdd";
-
+import BlockListApartmen from "./components/BlockListApartmen";
 import "./App.css";
-
 function App() {
   return (
     <div className="container-fluid p-0">
@@ -13,7 +11,7 @@ function App() {
       {/* <FormAppartmentAdd /> */}
       <div className="container-fluid p-0">
         <div className="col-2">
-          <h5>Здесь должно буть окно со списком из БД</h5>
+          <BlockListApartmen />
         </div>
         <div className="col-10">
           <GoogleMap />

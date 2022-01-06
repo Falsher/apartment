@@ -7,9 +7,9 @@ import cube from "./page/cube.png";
 export const MapContainer = (props) => {
   // eslint-disable-next-line no-unused-vars
   const [center, setCenter] = useState({ lat: 50, lng: 36.25 });
-
   const [arrDataAp, setArrDataAp] = useState([]);
-
+  const [arrayOneAppart, setArrayOneAppart] = useState([]);
+  const [activeCard, setActiveCard] = useState(false);
   const forceDataRetrieval = () => {
     DataApi.retrievalDataApi().then((appartments) =>
       setArrDataAp(appartments.data)
@@ -19,8 +19,35 @@ export const MapContainer = (props) => {
   useEffect(() => {
     forceDataRetrieval();
   }, []);
+
+  const onMarkerClick = (arr) => {
+    setActiveCard(true);
+    setArrayOneAppart(arr);
+    setTimeout(() => {
+      setActiveCard(false);
+    }, 4000);
+  };
   return (
     <div>
+      <div
+        className={activeCard ? "block-card card" : "block-card-disactive card"}
+        style={{ width: "18rem" }}
+      >
+        {activeCard ? (
+          <img
+            width="100%"
+            alt=""
+            src={`http://localhost:8090/${arrayOneAppart.nameImg}`}
+          />
+        ) : (
+          <></>
+        )}
+
+        <div className="card-body">
+          <p className="m-0">{arrayOneAppart.adress}</p>
+          <p className="m-0">{arrayOneAppart.description}</p>
+        </div>
+      </div>
       <FormAppartmentAdd force={forceDataRetrieval} />
       <Map
         google={props.google}
@@ -31,8 +58,8 @@ export const MapContainer = (props) => {
       >
         {arrDataAp.map((arr) => (
           <Marker
+            onClick={() => onMarkerClick(arr)}
             key={arr._id}
-            name={"Dolores park"}
             position={arr.geoAdress}
             icon={cube}
           />

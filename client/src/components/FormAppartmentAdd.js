@@ -34,12 +34,12 @@ const FormAppartmentAdd = ({ force }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setAdress("");
-    setDescription("");
     const basePage = await convertBase(page);
     const nameImg = page.name;
-    // console.log(page);
     DataApi.sendDataApi(adress, geoAdress, description, basePage, nameImg);
+    setAdress("");
+    setDescription("");
+    force();
     force();
   };
 
@@ -77,7 +77,7 @@ const FormAppartmentAdd = ({ force }) => {
           placeholder="Город Улица №дома"
           type="text"
         />
-        {/* <img width="100" alt="" src={baseImg} /> */}
+
         <MyInput
           value={description}
           onChange={(e) => setDescription(e.target.value)}
