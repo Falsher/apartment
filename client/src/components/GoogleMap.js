@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
+// import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import * as DataApi from "./DataApi";
 import FormAppartmentAdd from "./FormAppartmentAdd";
-import { HTTP_REQ } from "./constant";
+import BlockListApartmen from "./BlockListApartmen";
+import { HTTP_REQ, HTTP_REQ_LOCAL } from "./constant";
 import cube from "./page/cube.png";
 
 export const MapContainer = (props) => {
@@ -11,6 +13,11 @@ export const MapContainer = (props) => {
   const [arrDataAp, setArrDataAp] = useState([]);
   const [arrayOneAppart, setArrayOneAppart] = useState([]);
   const [activeCard, setActiveCard] = useState(false);
+
+  // const [activeMarker, setActiveMarker] = useState({});
+  // const [showingInfoWindow, setShowingInfoWindow] = useState(false);
+  // const [selectedPlace, setSelectedPlace] = useState({});
+
   const forceDataRetrieval = () => {
     DataApi.retrievalDataApi().then((appartments) =>
       setArrDataAp(appartments.data)
@@ -28,8 +35,33 @@ export const MapContainer = (props) => {
       setActiveCard(false);
     }, 4000);
   };
+  // const scrollMarkerClick = (props, marker, e) => {
+  //   setSelectedPlace(props);
+  //   setActiveMarker(marker);
+  //   setShowingInfoWindow(true);
+  // };
+
+  // const onMapClicked = (props) => {
+  //   if (showingInfoWindow) {
+  //     setShowingInfoWindow(false);
+  //     setActiveMarker(null);
+  //   }
+  // };
+  // useEffect(() => {
+  //   document.addEventListener("wheel", scrollMarkerClick);
+  //   return function () {
+  //     document.removeEventListener("wheel", scrollMarkerClick);
+  //   };
+  // }, []);
+  // console.log(window.document.body.children);
+  // let elem = document.querySelector("div[role='button']");
+  // let rect = elem.getBoundingClientRect();
+  // console.log(elem);
+
   return (
     <div>
+      <FormAppartmentAdd force={forceDataRetrieval} />
+      <BlockListApartmen />
       <div
         className={activeCard ? "block-card card" : "block-card-disactive card"}
         style={{ width: "18rem" }}
@@ -38,7 +70,7 @@ export const MapContainer = (props) => {
           <img
             width="100%"
             alt=""
-            src={`${HTTP_REQ}${arrayOneAppart.nameImg}`}
+            src={`${HTTP_REQ_LOCAL}${arrayOneAppart.nameImg}`}
           />
         ) : (
           <></>
@@ -49,23 +81,25 @@ export const MapContainer = (props) => {
           <p className="m-0">{arrayOneAppart.description}</p>
         </div>
       </div>
-      <FormAppartmentAdd force={forceDataRetrieval} />
+
       <Map
         google={props.google}
         style={{ width: "100%", height: "100%", position: "relative" }}
-        className="m-0 p-0"
         initialCenter={center}
         center={center}
+        zoom={15}
       >
-        {arrDataAp.map((arr) => (
-          <Marker
-            onClick={() => onMarkerClick(arr)}
-            key={arr._id}
-            position={arr.geoAdress}
-            icon={cube}
-          />
-        ))}
-        <Marker />
+        {arrDataAp.map((arr) => {
+          return (
+            <Marker
+              onClick={() => onMarkerClick(arr)}
+              name={arr._id}
+              key={arr._id}
+              position={arr.geoAdress}
+              icon={cube}
+            />
+          );
+        })}
       </Map>
     </div>
   );

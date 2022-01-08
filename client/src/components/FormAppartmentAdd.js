@@ -31,7 +31,7 @@ const FormAppartmentAdd = ({ force }) => {
       };
     });
   };
-
+  console.log(Geocode);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const basePage = await convertBase(page);
@@ -39,8 +39,9 @@ const FormAppartmentAdd = ({ force }) => {
     DataApi.sendDataApi(adress, geoAdress, description, basePage, nameImg);
     setAdress("");
     setDescription("");
-    force();
-    force();
+    for (let i = 0; i < 3; i++) {
+      force();
+    }
   };
 
   useEffect(() => {
