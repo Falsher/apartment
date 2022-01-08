@@ -31,7 +31,7 @@ const FormAppartmentAdd = ({ force }) => {
       };
     });
   };
-  console.log(Geocode);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const basePage = await convertBase(page);

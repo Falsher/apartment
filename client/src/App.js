@@ -1,5 +1,5 @@
 import React from "react";
-import GoogleMap from "./components/GoogleMap";
+import Map from "./components/Map";
 import Navbar from "./components/Navbar";
 import "./App.css";
 function App() {
@@ -8,7 +8,7 @@ function App() {
       <Navbar />
       <div className="container-fluid p-0">
         <div className="col">
-          <GoogleMap />
+          <Map />
         </div>
       </div>
     </div>
