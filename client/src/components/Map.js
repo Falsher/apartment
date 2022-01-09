@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   GoogleMap,
   LoadScript,
@@ -23,7 +24,7 @@ const MyComponents = () => {
       setArrDataAp(appartments.data)
     );
   };
-
+  // if(){}
   useEffect(() => {
     forceDataRetrieval();
   }, []);
@@ -46,6 +47,9 @@ const MyComponents = () => {
 
   const locations = arrDataAp.map((arr) => arr);
 
+  const cluster = (b) => {
+    console.log(b.markers.map((a) => a.isAdded));
+  };
   return (
     <div>
       <FormAppartmentAdd force={forceDataRetrieval} />
@@ -77,7 +81,9 @@ const MyComponents = () => {
           zoom={15}
           center={center}
         >
-          <MarkerClusterer>
+          <MarkerClusterer
+            onClusteringBegin={(markerClaster) => cluster(markerClaster)}
+          >
             {(clusterer) =>
               locations.map((location) => {
                 return (
