@@ -39,7 +39,7 @@ const FormAppartmentAdd = ({ force }) => {
     DataApi.sendDataApi(adress, geoAdress, description, basePage, nameImg);
     setAdress("");
     setDescription("");
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i <= 3; i++) {
       force();
     }
   };

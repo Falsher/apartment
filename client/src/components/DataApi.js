@@ -8,7 +8,7 @@ export const sendDataApi = async (
   basePage,
   nameImg
 ) => {
-  return await axios.post(`${HTTP_REQ_LOCAL}auth/signup`, {
+  return await axios.post(`${HTTP_REQ}auth/signup`, {
     adress,
     geoAdress,
     description,
@@ -17,5 +17,5 @@ export const sendDataApi = async (
   });
 };
 export const retrievalDataApi = async () => {
-  return axios.get(`${HTTP_REQ_LOCAL}auth/getApartment`);
+  return axios.get(`${HTTP_REQ}auth/getApartment`);
 };

@@ -62,7 +62,7 @@ const MyComponents = () => {
           <img
             width="100%"
             alt=""
-            src={`${HTTP_REQ_LOCAL}${arrayOneAppart.nameImg}`}
+            src={`${HTTP_REQ}${arrayOneAppart.nameImg}`}
           />
         ) : (
           <></>

@@ -17,11 +17,7 @@ const BlockListApartmen = () => {
             {dataServer.map((data) => {
               return (
                 <li className="list-group-item heightL p-2 m-0" key={data._id}>
-                  <img
-                    width="100%"
-                    alt=""
-                    src={`${HTTP_REQ_LOCAL}${data.nameImg}`}
-                  />
+                  <img width="100%" alt="" src={`${HTTP_REQ}${data.nameImg}`} />
                   <p className="m-0">{data.adress}</p>
                   <p className="m-0">{data.description}</p>
                 </li>
