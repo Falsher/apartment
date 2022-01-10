@@ -18,18 +18,19 @@ const MyComponents = () => {
   const [arrDataAp, setArrDataAp] = useState([]);
   const [arrayOneAppart, setArrayOneAppart] = useState([]);
   const [activeCard, setActiveCard] = useState(false);
-
+  const [markersOnline, setMarkersOnline] = useState([]);
   const forceDataRetrieval = () => {
     DataApi.retrievalDataApi().then((appartments) =>
       setArrDataAp(appartments.data)
     );
   };
-  // if(){}
+
   useEffect(() => {
     forceDataRetrieval();
   }, []);
 
   const onMarkerClick = (arr) => {
+    console.log(arr);
     setArrayOneAppart(arr);
     setActiveCard(true);
     setTimeout(() => {
@@ -40,20 +41,24 @@ const MyComponents = () => {
   function createKey(location) {
     return location.lat + location.lng;
   }
+
   const mapContainerStyle = {
     width: "100%",
-    height: window.innerHeight,
+    height: window.innerHeight - 100,
   };
 
   const locations = arrDataAp.map((arr) => arr);
 
   const cluster = (b) => {
-    console.log(b.markers.map((a) => a.isAdded));
+    const onlineClusters = b.markers.filter((a) => a.isAdded);
+    if (onlineClusters.length) {
+      setMarkersOnline(onlineClusters);
+    }
   };
   return (
     <div>
       <FormAppartmentAdd force={forceDataRetrieval} />
-      <BlockListApartmen />
+      <BlockListApartmen props={markersOnline} />
       <div
         className={activeCard ? "block-card card" : "block-card-disactive card"}
         style={{ width: "18rem" }}
@@ -82,7 +87,7 @@ const MyComponents = () => {
           center={center}
         >
           <MarkerClusterer
-            onClusteringBegin={(markerClaster) => cluster(markerClaster)}
+            onClusteringEnd={(markerClaster) => cluster(markerClaster)}
           >
             {(clusterer) =>
               locations.map((location) => {
@@ -92,6 +97,12 @@ const MyComponents = () => {
                     key={createKey(location.geoAdress)}
                     position={location.geoAdress}
                     clusterer={clusterer}
+                    options={{
+                      img: location.nameImg,
+                      description: location.description,
+                      adress: location.adress,
+                      id: location._id,
+                    }}
                   />
                 );
               })
